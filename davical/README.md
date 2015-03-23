@@ -7,6 +7,9 @@ You have to link a postgres database to the container. The users on
 the postgres server must exist prior to the container startup. The 
 link bust be aliased as "postgres"!
 
+The container exposes port 80 for http. I recommend to use a reverse
+proxy to enable ssl!
+
 The container should be configured by environment variables passed.
 The variables are:
 
@@ -42,16 +45,13 @@ This is only needed for the cli maintainance scripts.
 
 ## Example
 
-
-### Initialize
-
-    docker run \
+    docker run -d -P  \
     	-e DAVICAL_SERVER_NAME=example.com \
     	-e DAVICAL_DB_NAME=davical \
-    	-e DAVICAL_DB_USER \
-    	-e DAVICAL_DB_ADMIN \
-    	-e DAVICAL_DB_PASS \
-    	-e DAVICAL_DB_ADMIN_PASS \
+    	-e DAVICAL_DB_USER=davical_app \
+    	-e DAVICAL_DB_ADMIN=davical_dba \
+    	-e DAVICAL_DB_PASS=xxx \
+    	-e DAVICAL_DB_ADMIN_PASS=yyy \
     	--link db:postgres \
     	janlo/davical \
 
