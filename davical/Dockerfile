@@ -7,7 +7,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
 	apt-get -y install --no-install-recommends \
-		davical && \
+		davical \
+		php5-curl && \
 	apt-get clean
 
 COPY davical.conf /etc/apache2/sites-available/davical.conf
