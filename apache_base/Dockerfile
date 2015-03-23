@@ -5,11 +5,11 @@ MAINTAINER Jan Losinski <losinski@wh2.tu-dresden.de>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_PID_FILE /var/run/apache2.pid
+ENV APACHE_RUN_USER=www-data \
+	APACHE_RUN_GROUP=www-data \
+	APACHE_LOG_DIR=/var/log/apache2 \
+	APACHE_LOCK_DIR=/var/lock/apache2 \
+	APACHE_PID_FILE=/var/run/apache2.pid
 
 RUN apt-get update && \
 	apt-get -y install --no-install-recommends \
