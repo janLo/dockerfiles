@@ -2,12 +2,13 @@
 
 set -e
 
-ENV DAVICAL_SERVER_NAME example.com
-ENV DAVICAL_DB_NAME davical
-ENV DAVICAL_DB_USER davical_app
-ENV DAVICAL_DB_ADMIN davical_dba
-ENV DAVICAL_DB_PASS XXX
-ENV DAVICAL_DB_ADMIN_PASS XXX
+if [ -e /etc/davical/servername ]; then
+	export DAVICAL_SERVER_NAME=$(cat /etc/davical/servername)
+else
+	export DAVICAL_SERVER_NAME=${DAVICAL_SERVER_NAME:=example.com}
+	echo ${DAVICAL_SERVER_NAME} > /etc/davical/servername
+fi
+
 if [ ! -e /etc/davical/administration.yml ]; then
 cat <<EOF > /etc/davical/administration.yml
 #
@@ -33,7 +34,7 @@ admin_db_pass: ${DAVICAL_DB_ADMIN_PASS}
 ##
 ## The hostname/IP.  Not needed if using unix sockets to a local server.
 #admin_db_host: 2401:170:20:17::1024:0
-admin_db_host: ${DB_PORT_5432_TCP_ADDR}
+admin_db_host: postgres
 
 ##
 ## The database name
@@ -58,11 +59,13 @@ cat <<EOF > /etc/davical/config.php
 
 \$container_db_name="${DAVICAL_DB_NAME}";
 \$container_db_user="${DAVICAL_DB_USER}";
-\$container_db_host=\$ENV["DB_PORT_5432_TCP_ADDR"];
+\$container_db_host="postgres";
 \$container_db_password="${DAVICAL_DB_PASS}";
 
 include('config_real.php');
 EOF
 fi
+
+echo "${DB_PORT_5432_TCP_ADDR}	postgres" >> /etc/hosts
 
 exec /usr/sbin/apache2ctl -D FOREGROUND
