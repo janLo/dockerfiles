@@ -43,6 +43,32 @@ The database password of the admin user.
 This is only needed for the cli maintainance scripts.
 
 
+## Database
+
+You have to use a seperate postgres container. Within this container
+you need the app- and the admin-user. If you use the official postgres
+container you can do:
+
+    $ docker run -it --link <davical-postgres>:postgres --rm postgres /bin/bash
+    $ createuser -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres" -W -P <davical_dba>
+    $ createuser -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres" -W -P <davical_app>
+
+The scripts to create the database in `/usr/share/davical/dba/create-database.sh`
+may work then in the davical container:
+
+    $ docker run -ti --rm  \
+    	-e DAVICAL_SERVER_NAME=example.com \
+    	-e DAVICAL_DB_NAME=davical \
+    	-e DAVICAL_DB_USER=davical_app \
+    	-e DAVICAL_DB_ADMIN=davical_dba \
+    	-e DAVICAL_DB_PASS=xxx \
+    	-e DAVICAL_DB_ADMIN_PASS=yyy \
+    	--link db:postgres \
+    	janlo/davical \
+        /bin/bash
+    $ /usr/share/davical/dba/create-database.sh
+
+
 ## Example
 
     docker run -d -P  \
@@ -53,5 +79,5 @@ This is only needed for the cli maintainance scripts.
     	-e DAVICAL_DB_PASS=xxx \
     	-e DAVICAL_DB_ADMIN_PASS=yyy \
     	--link db:postgres \
-    	janlo/davical \
+    	janlo/davical
 
