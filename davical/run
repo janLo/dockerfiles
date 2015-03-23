@@ -69,8 +69,6 @@ include('config_real.php');
 EOF
 fi
 
-echo "${DB_PORT_5432_TCP_ADDR}	postgres" >> /etc/hosts
-
 if [ "x$1" = 'xapache2' ]; then
 	echo "Start webserver"
 	exec /usr/sbin/apache2ctl -D FOREGROUND
