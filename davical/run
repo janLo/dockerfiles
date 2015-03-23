@@ -10,6 +10,8 @@ else
 fi
 
 if [ ! -e /etc/davical/administration.yml ]; then
+
+if [ "x" != "x${DAVICAL_DB_ADMIN_PASS}" -a "x" != "x${DAVICAL_DB_ADMIN}" ]; then
 cat <<EOF > /etc/davical/administration.yml
 #
 # Administration Configuration file (sample)
@@ -50,6 +52,7 @@ admin_db_name: ${DAVICAL_DB_NAME}
 app_db_user: ${DAVICAL_DB_USER}
 EOF
 fi
+fi
 
 if [ ! -e /etc/davical/config.php ]; then
 cat <<EOF > /etc/davical/config.php
@@ -68,4 +71,9 @@ fi
 
 echo "${DB_PORT_5432_TCP_ADDR}	postgres" >> /etc/hosts
 
-exec /usr/sbin/apache2ctl -D FOREGROUND
+if [ "x$1" = 'xapache2' ]; then
+	echo "Start webserver"
+	exec /usr/sbin/apache2ctl -D FOREGROUND
+else
+	exec "$@"
+fi

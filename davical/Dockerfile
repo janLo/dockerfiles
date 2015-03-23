@@ -23,3 +23,4 @@ VOLUME [ "/etc/davical" ]
 EXPOSE 80 
 
 ENTRYPOINT ["/usr/local/bin/run_container"]
+CMD ["apache2"]

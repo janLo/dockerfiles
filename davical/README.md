@@ -7,8 +7,8 @@ You have to link a postgres database to the container. The users on
 the postgres server must exist prior to the container startup. The 
 link bust be aliased as "postgres"!
 
-The container should be configured by environment variables passed
-at least the first time the container is started. The variables are:
+The container should be configured by environment variables passed.
+The variables are:
 
 ### `DAVICAL_SERVER_NAME`
 
@@ -27,6 +27,8 @@ The name of the normal davical database user.
 
 The name of the davical database admin user.
 
+This is only needed for the cli maintainance scripts.
+
 ### `DAVICAL_DB_PASS`
 
 The database password for the normal davical user.
@@ -35,13 +37,15 @@ The database password for the normal davical user.
 
 The database password of the admin user.
 
+This is only needed for the cli maintainance scripts.
+
 
 ## Example
 
 
 ### Initialize
 
-    docker run --rm \
+    docker run \
     	-e DAVICAL_SERVER_NAME=example.com \
     	-e DAVICAL_DB_NAME=davical \
     	-e DAVICAL_DB_USER \
@@ -51,8 +55,3 @@ The database password of the admin user.
     	--link db:postgres \
     	janlo/davical \
 
-### Run
-
-    docker run -d \
-    	--link db:postgres \
-    	janlo/davical \
