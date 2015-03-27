@@ -13,7 +13,6 @@ RUN apt-get update && \
 	apt-get clean
 
 COPY agendav.conf /etc/apache2/sites-available/agendav.conf
-#COPY run /usr/local/bin/run_container
 
 RUN a2ensite agendav && \
 	a2dissite 000-default && \
@@ -28,12 +27,12 @@ RUN cd /var/www && \
 	apt-get -y remove --purge ca-certificates unzip git curl && \
 	apt-get -y autoremove --purge && \
 	apt-get clean
+RUN chown -R www-data:www-data /var/www/agendav/web/var
 
-
-
-#VOLUME [ "/etc/davical" ]
+COPY settings.php /var/www/agendav/web/config/
+COPY run /usr/local/bin/run_container
 
 EXPOSE 80 
 
-#ENTRYPOINT ["/usr/local/bin/run_container"]
-#CMD ["apache2"]
+ENTRYPOINT ["/usr/local/bin/run_container"]
+CMD ["apache2"]
