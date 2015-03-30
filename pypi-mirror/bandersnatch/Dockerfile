@@ -3,11 +3,17 @@ FROM debian:jessie
 MAINTAINER Jan Losinski <losinski@wh2.tu-dresden.de>
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends virtualenv python-dev ca-certificates python-pip wget && \
+	apt-get -y install --no-install-recommends \
+		virtualenv \
+		python-dev \
+		ca-certificates \
+		python-pip \
+	&& \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN groupadd user && useradd --uid 1000 --create-home --home-dir /home/user -g user user
+RUN groupadd user && \
+	useradd --uid 1000 --create-home --home-dir /home/user -g user user
 
 WORKDIR /home/user
 
