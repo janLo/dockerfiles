@@ -1,5 +1,5 @@
-Agendav docker image
-====================
+Pypi mirror nginx docker image
+==============================
 
 This is an docker image of nginx with a simple configuration
 to serve a pypi mirror index. You can use the 
