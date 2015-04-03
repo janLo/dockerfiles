@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+
+mkdir -p /tmp/php_profile
+chmod 777 /tmp/php_profile
+
+cat <<-EOF >> /etc/php5/mods-available/xdebug.ini
+
+	xdebug.remote_enable=1
+	xdebug.remote_port="9000"
+	xdebug.remote_connect_back=1
+	xdebug.profiler_enable=1
+	xdebug.profiler_output_dir="/tmp/php_profile"
+EOF
+
+if [ "x$PROVIDE_VENDOR" == "xmount" ]; then
+	mkdir -p /var/www/agendav/web/vendor
+	mount --bind /var/www/agendav_web_vendor /var/www/agendav/web/vendor
+elif [ "x$PROVIDE_VENDOR" == "xcopy" ]; then
+	rm -rf /var/www/agendav/web/vendor
+	cp -a /var/www/agendav_web_vendor /var/www/agendav/web/vendor
+fi
+
+mkdir -p /var/www/agendav/web/var
+chmod -R 777 /var/www/agendav/web/var
+
+if [ "x$1" = 'xapache2' ]; then
+	echo "Start webserver"
+	exec /usr/sbin/apache2ctl -D FOREGROUND
+else
+	exec "$@"
+fi
