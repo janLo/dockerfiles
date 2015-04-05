@@ -40,16 +40,26 @@ the official postgres docker image)
 
 Create the database tables
 
-    $ wget -O- https://raw.githubusercontent.com/janLo/agendav/agendav_running/sql/pgsql.schema.sql | docker run --rm -ti \
-        --link davical-postgres:postgres \
-        --link boring_nobel:caldav \
-        postgres \
-    	sh -c 'exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres '                             
+    $ docker run --rm -ti \
+    	--link davical-postgres:postgres \
+    	postgres \
+    	sh -c 'apt-get update && apt-get -y install wget ca-certificates && wget -O- https://raw.githubusercontent.com/janLo/agendav/agendav_running/sql/pgsql.schema.sql | psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U agendav agendav '                             
+
+Update the database
+
+    $ docker run --rm -ti \
+    	--link postgres:postgres \
+    	--link caldav:caldav \
+    	-v <path_to_configdir>:/var/www/agendav/web/config
+    	--workdir /var/www/agendav
+    	janlo/agendav
+    	./bin/agendavcli dbupdate
 
 Run the webserver
 
     $ docker run -P -d \
-	--name agendav \
-   	--link postgres:postgres \
+    	--name agendav \
+    	--link postgres:postgres \
     	--link caldav:caldav \
-        janlo/agendav
+    	-v <path_to_configdir>:/var/www/agendav/web/config
+    	janlo/agendav
