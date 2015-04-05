@@ -20,19 +20,16 @@ RUN a2ensite agendav && \
 
 RUN cd /var/www && \
 	apt-get -y install --no-install-recommends unzip curl git ca-certificates && \
-	git clone --branch develop  https://github.com/adobo/agendav.git && \
-	cd agendav/web && \
-	curl -s https://getcomposer.org/installer | php && \
-	php composer.phar install && \
+	git clone --branch agendav_running https://github.com/janLo/agendav.git && \
 	apt-get -y remove --purge ca-certificates unzip git curl && \
 	apt-get -y autoremove --purge && \
 	apt-get clean
-RUN chown -R www-data:www-data /var/www/agendav/web/var
+RUN chown -R www-data:www-data /var/www/agendav/
 
-COPY settings.php /var/www/agendav/web/config/
 COPY run /usr/local/bin/run_container
 
 EXPOSE 80 
 
+VOLUME ["/var/www/agendav/web/config"]
 ENTRYPOINT ["/usr/local/bin/run_container"]
 CMD ["apache2"]
