@@ -7,6 +7,22 @@ Project can be found on https://github.com/adobo/agendav/.
 It is configured to use a postgres database and a caldav
 server that is reachable via docker container linking.
 
+## Versions
+
+I have two versions of a agendav container:
+
+* `latest` is a current development snapshot. As the developer
+  of agendav has decided to replace nearly all code in recent
+  versions expect this to be buggy zo unuseable. (see
+  https://github.com/adobo/agendav/issues/133 for example)
+* `old` is a snapshot from 2012 that "mostly" work. It is
+  based on the `agendav_running` branch of my forked repo at
+  https://github.com/janLo/agendav/tree/agendav_running
+
+The following documentation applies to the `latest` image. For
+documentation of the `old` version see
+https://github.com/janLo/dockerfiles/blob/agendav_old/agendav/README.md
+
 ## Configuration
 
 Configuration is done using some environment variables:
