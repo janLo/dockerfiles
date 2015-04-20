@@ -16,7 +16,9 @@ RUN apt-get update && \
 		apache2 \
 		php5 \
 		libapache2-mod-php5 && \
-	apt-get clean
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 
 RUN a2enmod php5
 

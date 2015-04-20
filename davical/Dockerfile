@@ -9,7 +9,8 @@ RUN apt-get update && \
 	apt-get -y install --no-install-recommends \
 		davical \
 		php5-curl && \
-	apt-get clean
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY davical.conf /etc/apache2/sites-available/davical.conf
 COPY example-config.php /etc/davical/config_real.php
