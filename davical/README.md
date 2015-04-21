@@ -53,8 +53,21 @@ container you can do:
     $ createuser -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres" -W -P <davical_dba>
     $ createuser -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres" -W -P <davical_app>
 
-The scripts to create the database in `/usr/share/davical/dba/create-database.sh`
-may work then in the davical container:
+After that you have to create the davical database. This is the same
+procedure like creating the users:
+
+    $ docker run -it --link <davical-postgres>:postgres --rm postgres /bin/bash
+    $ createdb -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres" -W -P <davical_database>
+
+After that you have to initialize the database with teh schema and
+some default data. The script davical provides does not work in the
+case of a remote postgres container. Details can be found at
+http://wiki.davical.org/index.php/PostgreSQL_Config
+
+I have prepared a tool container that can used once to setup the
+database structure and default data. It can be found in the
+`davical_tool` directory in this repo or as `janlo/davical:tool`
+at the docker hub. For usage details see the README of the image:
 
     $ docker run -ti --rm  \
     	-e DAVICAL_SERVER_NAME=example.com \
@@ -64,9 +77,7 @@ may work then in the davical container:
     	-e DAVICAL_DB_PASS=xxx \
     	-e DAVICAL_DB_ADMIN_PASS=yyy \
     	--link db:postgres \
-    	janlo/davical \
-        /bin/bash
-    $ /usr/share/davical/dba/create-database.sh
+    	janlo/davical:tool
 
 
 ## Example
