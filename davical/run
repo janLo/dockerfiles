@@ -9,6 +9,8 @@ else
 	echo ${DAVICAL_SERVER_NAME} > /etc/davical/servername
 fi
 
+export APACHE_SERVERNAME=${DAVICAL_SERVER_NAME}
+
 if [ ! -e /etc/davical/administration.yml ]; then
 
 if [ "x" != "x${DAVICAL_DB_ADMIN_PASS}" -a "x" != "x${DAVICAL_DB_ADMIN}" ]; then
