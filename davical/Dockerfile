@@ -19,6 +19,7 @@ COPY run /usr/local/bin/run_container
 RUN a2ensite davical && \
 	a2dissite 000-default
 
+RUN ln -sf /dev/stderr /var/log/apache2/davi-error.log
 
 VOLUME [ "/etc/davical" ]
 
