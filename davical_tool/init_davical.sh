@@ -6,6 +6,8 @@ PGPASSWORD=${DAVICAL_DB_ADMIN_PASS}
 DAVICAL_BACKUP=${DAVICAL_BACKUP:-/tmp/davical_backup.sql}
 POSTGRES_HOST=${POSTGRES_HOST:-postgres}
 
+export PGPASSWORD=${PGPASSWORD}
+
 psql -qXAt -U ${DAVICAL_DB_ADMIN} -h ${POSTGRES_HOST} ${DAVICAL_DB_NAME} < /usr/share/awl/dba/awl-tables.sql 
 psql -qXAt -U ${DAVICAL_DB_ADMIN} -h ${POSTGRES_HOST} ${DAVICAL_DB_NAME} < /usr/share/awl/dba/schema-management.sql
 psql -qXAt -U ${DAVICAL_DB_ADMIN} -h ${POSTGRES_HOST} ${DAVICAL_DB_NAME} < /usr/share/davical/dba/davical.sql 
