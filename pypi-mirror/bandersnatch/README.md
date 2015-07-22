@@ -17,5 +17,5 @@ documentation.
 Assuming you have mounted your storage for the pypi-mirror
 on the host at /mnt/pypi_data:
 
-    docker run --rm -v /mnt/pypi_data:/srv/pypi janlo/bandersnatch:latest
+    docker run --rm -v /mnt/pypi_data:/srv/pypi janlo/pypi-mirror-bandersnatch:latest
 
