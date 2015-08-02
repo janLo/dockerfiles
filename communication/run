@@ -1,0 +1,5 @@
+#!/bin/sh
+
+tmux new-session -d -s comm
+
+tmux -CC new-session -s dummy > /dev/null
