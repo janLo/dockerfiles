@@ -206,9 +206,7 @@ $c->schedule_private_key = 'PRIVATE-KEY-BASE-64-DATA';
 * Required if you want to enable remote binding ( webcal subscriptions )
 * Default: none
 */  
-/*
-$c->external_refresh = 60;
-*/
+$c->external_refresh = 20;
 
 
 /**
