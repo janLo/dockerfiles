@@ -5,9 +5,12 @@ MAINTAINER Jan Losinski <losinski@wh2.tu-dresden.de>
 
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN echo 'deb http://deb.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
+
 RUN apt-get update && \
 	apt-get -y install --no-install-recommends \
-		davical \
+		davical/jessie-backports \
+		ca-certificates \
 		php5-curl && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
