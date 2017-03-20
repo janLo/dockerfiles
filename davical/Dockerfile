@@ -20,7 +20,8 @@ COPY example-config.php /etc/davical/config_real.php
 COPY run /usr/local/bin/run_container
 
 RUN a2ensite davical && \
-	a2dissite 000-default
+	a2dissite 000-default && \
+	mv /etc/davical/config.php /etc/davical/config_dflt.php
 
 RUN ln -sf /dev/stderr /var/log/apache2/davi-error.log
 
