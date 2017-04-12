@@ -213,7 +213,7 @@ $c->external_refresh = 20;
     * * Required if your remote calendar only delivers to known user agents.
     * * Default: none
     * */
-$c->external_external_ua_string = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13';
+$c->external_ua_string = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13';
 
 
 /**
