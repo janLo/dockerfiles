@@ -208,6 +208,13 @@ $c->schedule_private_key = 'PRIVATE-KEY-BASE-64-DATA';
 */  
 $c->external_refresh = 20;
 
+/**
+    * * External subscription (BIND) user agent string
+    * * Required if your remote calendar only delivers to known user agents.
+    * * Default: none
+    * */
+$c->external_external_ua_string = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13';
+
 
 /**
  * The "support_obsolete_free_busy_property" value controls whether,
