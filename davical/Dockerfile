@@ -11,7 +11,8 @@ RUN apt-get update && \
 	apt-get -y install --no-install-recommends \
 		davical/jessie-backports \
 		ca-certificates \
-		php5-curl && \
+		php5-curl \
+		patch && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -24,6 +25,10 @@ RUN a2ensite davical && \
 	mv /etc/davical/config.php /etc/davical/config_dflt.php
 
 RUN ln -sf /dev/stderr /var/log/apache2/davi-error.log
+
+ADD patches /root/
+RUN cd /usr/share/davical && \
+	patch -p1 < /root/001_external_ua_string.patch
 
 VOLUME [ "/etc/davical" ]
 

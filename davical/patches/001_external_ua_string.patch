@@ -1,0 +1,31 @@
+diff --git a/inc/external-fetch.php b/inc/external-fetch.php
+index dd5cddd9..a65e6e02 100644
+--- a/inc/external-fetch.php
++++ b/inc/external-fetch.php
+@@ -39,7 +39,7 @@ function create_external ( $path,$is_calendar,$is_addressbook )
+   }
+ }
+ 
+-function fetch_external ( $bind_id, $min_age = '1 hour' )
++function fetch_external ( $bind_id, $min_age = '1 hour', $ua_string )
+ {
+   if ( ! function_exists ( "curl_init" ) ) {
+     dbg_error_log("external", "external resource cannot be fetched without curl, please install curl");
+@@ -64,6 +64,8 @@ function fetch_external ( $bind_id, $min_age = '1 hour' )
+       curl_setopt ( $curl, CURLOPT_NOBODY, true );
+       curl_setopt ( $curl, CURLOPT_TIMEVALUE, $local_ts->format("U") );
+       curl_setopt ( $curl, CURLOPT_TIMECONDITION, CURL_TIMECOND_IFMODSINCE );
++      if ( isset( $ua_string ) )
++	  curl_setopt($curl, CURLOPT_USERAGENT, $ua_string);
+       dbg_error_log("external", "checking external resource for remote changes " . $row->external_url );
+       $ics = curl_exec ( $curl );
+       $info = curl_getinfo ( $curl );
+@@ -115,7 +117,7 @@ function update_external ( $request )
+   if ( $qry->Exec('DAVResource') && $qry->rows() > 0 && $row = $qry->Fetch() ) {
+     if ( $row->bind_id != 0 ) {
+       dbg_error_log("external", "external resource needs updating, this might take a minute : %s", $row->url );
+-      fetch_external ( $row->bind_id, $c->external_refresh . ' minutes' );
++      fetch_external ( $row->bind_id, $c->external_refresh . ' minutes', $c->external_ua_string );
+     }
+   }
+ }
