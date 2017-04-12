@@ -228,6 +228,43 @@ $c->external_ua_string = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8
  */
 $c->support_obsolete_free_busy_property = false;
 
+/***************************************************************************
+*                                                                          *
+*                     Operation behind a Reverse Proxy                     *
+*                                                                          *
+***************************************************************************/
+
+/**
+* If you install DAViCal behind a reverse proxy (e.g. an SSL offloader or
+* application firewall, or in order to present services from different machines
+* on a single public IP / hostname), the client IP, protocol and port used may
+* be different from what the web server is reporting to DAViCal. Often, the
+* original values are written to the X-Real-IP and/or X-Forwarded-For,
+* X-Forwarded-Proto and X-Forwarded-Port headers. You can instruct DAViCal to
+* attempt to "do the right thing" and use the content of these headers instead,
+* when they are available.
+* CAUTION: Malicious clients can spoof these headers. When you enable this, you
+* need to make sure your reverse proxy erases any pre-existing values of all
+* these headers, and that no untrusted requests can reach DAViCal without
+* passing the proxy server.
+* Default: false
+ */
+// $c->trust_x_forwarded = true;
+
+/**
+* Instead or in addition to the above, you can compute, override or unset the
+* relevant variables. This is a catch-all for non-standard or advanced
+* environments.
+ */
+
+/* Unset X-Real-IP, as it's not controlled by the reverse proxy. */
+// unset( $_SERVER['X-Real-IP'] );
+$c->trust_x_forwarded = true;
+
+/* Set all values manually. */
+$_SERVER['HTTPS'] = 'on';
+$_SERVER['SERVER_PORT'] = 443;
+// $_SERVER['REMOTE_ADDR'] = $_SERVER['Client-IP'];
 
 
 /***************************************************************************
