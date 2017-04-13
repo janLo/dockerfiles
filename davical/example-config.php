@@ -249,7 +249,7 @@ $c->support_obsolete_free_busy_property = false;
 * passing the proxy server.
 * Default: false
  */
-// $c->trust_x_forwarded = true;
+$c->trust_x_forwarded = true;
 
 /**
 * Instead or in addition to the above, you can compute, override or unset the
@@ -259,11 +259,11 @@ $c->support_obsolete_free_busy_property = false;
 
 /* Unset X-Real-IP, as it's not controlled by the reverse proxy. */
 // unset( $_SERVER['X-Real-IP'] );
-$c->trust_x_forwarded = true;
+// $c->trust_x_forwarded = true;
 
 /* Set all values manually. */
-$_SERVER['HTTPS'] = 'on';
-$_SERVER['SERVER_PORT'] = 443;
+// $_SERVER['HTTPS'] = 'on';
+// $_SERVER['SERVER_PORT'] = 443;
 // $_SERVER['REMOTE_ADDR'] = $_SERVER['Client-IP'];
 
 
