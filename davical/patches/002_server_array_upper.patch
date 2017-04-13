@@ -1,0 +1,66 @@
+diff --git a/htdocs/always.php b/htdocs/always.php
+index 9e817023..07ba1d50 100644
+--- a/htdocs/always.php
++++ b/htdocs/always.php
+@@ -184,20 +184,20 @@ ob_end_clean();
+ * Override server-detected variables with those from X-Forwarded headers
+ */
+ if ( isset($c->trust_x_forwarded) && $c->trust_x_forwarded ) {
+-  if ( isset($_SERVER['X-Real-IP']) ) {
+-    $_SERVER['REMOTE_ADDR'] = $_SERVER['X-Real-IP'];
+-  } elseif ( isset($_SERVER['X-Forwarded-For']) ) {
+-    list($_SERVER['REMOTE_ADDR'], $rest) = explode( ',', $_SERVER['X-Forwarded-For']);
++  if ( isset($_SERVER['X-REAL-IP']) ) {
++    $_SERVER['REMOTE_ADDR'] = $_SERVER['X-REAL-IP'];
++  } elseif ( isset($_SERVER['X-FORWARDED-FOR']) ) {
++    list($_SERVER['REMOTE_ADDR'], $rest) = explode( ',', $_SERVER['X-FORWARDED-FOR']);
+   }
+-  if ( isset($_SERVER['X-Forwarded-Proto']) ) {
+-    if ($_SERVER['X-Forwarded-Proto'] == 'https') {
++  if ( isset($_SERVER['X-FORWARDED-PROTO']) ) {
++    if ($_SERVER['X-FORWARDED-PROTO'] == 'https') {
+       $_SERVER['HTTPS'] = 'on';
+     } else {
+       $_SERVER['HTTPS'] = 'off';
+     }
+   }
+-  if ( isset($_SERVER['X-Forwarded-Port']) ) {
+-    $_SERVER['SERVER_PORT'] = $_SERVER['X-Forwarded-Port'];
++  if ( isset($_SERVER['X-FORWARDED-PORT']) ) {
++    $_SERVER['SERVER_PORT'] = $_SERVER['X-FORWARDED-PORT'];
+   }
+ }
+ 
+diff --git a/inc/always.php.in b/inc/always.php.in
+index b30fe6bd..afcc2ff1 100644
+--- a/inc/always.php.in
++++ b/inc/always.php.in
+@@ -184,20 +184,20 @@ ob_end_clean();
+ * Override server-detected variables with those from X-Forwarded headers
+ */
+ if ( isset($c->trust_x_forwarded) && $c->trust_x_forwarded ) {
+-  if ( isset($_SERVER['X-Real-IP']) ) {
+-    $_SERVER['REMOTE_ADDR'] = $_SERVER['X-Real-IP'];
+-  } elseif ( isset($_SERVER['X-Forwarded-For']) ) {
+-    list($_SERVER['REMOTE_ADDR'], $rest) = explode( ',', $_SERVER['X-Forwarded-For']);
++  if ( isset($_SERVER['X-REAL-IP']) ) {
++    $_SERVER['REMOTE_ADDR'] = $_SERVER['X-REAL-IP'];
++  } elseif ( isset($_SERVER['X-FORWARDED-FOR']) ) {
++    list($_SERVER['REMOTE_ADDR'], $rest) = explode( ',', $_SERVER['X-FORWARDED-FOR']);
+   }
+-  if ( isset($_SERVER['X-Forwarded-Proto']) ) {
+-    if ($_SERVER['X-Forwarded-Proto'] == 'https') {
++  if ( isset($_SERVER['X-FORWARDED-PROTO']) ) {
++    if ($_SERVER['X-FORWARDED-PROTO'] == 'https') {
+       $_SERVER['HTTPS'] = 'on';
+     } else {
+       $_SERVER['HTTPS'] = 'off';
+     }
+   }
+-  if ( isset($_SERVER['X-Forwarded-Port']) ) {
+-    $_SERVER['SERVER_PORT'] = $_SERVER['X-Forwarded-Port'];
++  if ( isset($_SERVER['X-FORWARDED-PORT']) ) {
++    $_SERVER['SERVER_PORT'] = $_SERVER['X-FORWARDED-PORT'];
+   }
+ }
+ 
