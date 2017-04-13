@@ -28,7 +28,8 @@ RUN ln -sf /dev/stderr /var/log/apache2/davi-error.log
 
 ADD patches /root/
 RUN cd /usr/share/davical && \
-	patch -p1 < /root/001_external_ua_string.patch
+	patch -p1 < /root/001_external_ua_string.patch && \
+	patch -p1 < /root/002_server_array_upper.patch
 
 VOLUME [ "/etc/davical" ]
 
