@@ -10,7 +10,7 @@ RUN echo 'deb http://deb.debian.org/debian jessie-backports main' >> /etc/apt/so
 	apt-get -y install --no-install-recommends \
 		davical \
 		ca-certificates \
-		php5-curl \
+		php-curl \
 		patch && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
