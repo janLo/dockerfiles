@@ -1,5 +1,5 @@
 # davical
-FROM debian:jessie
+FROM debian:stretch
 
 MAINTAINER Jan Losinski <losinski@wh2.tu-dresden.de>
 
