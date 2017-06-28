@@ -14,8 +14,8 @@ ENV APACHE_RUN_USER=www-data \
 RUN apt-get update && \
 	apt-get -y install --no-install-recommends \
 		apache2 \
-		php5 \
-		libapache2-mod-php5 && \
+		php \
+		libapache2-mod-php && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
