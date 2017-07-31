@@ -1,11 +1,11 @@
-FROM debian:jessie
+FROM debian:stretch
 
 MAINTAINER Jan Losinski <losinski@wh2.tu-dresden.de>
 
 RUN apt-get update && \
 	apt-get -y install --no-install-recommends \
 		virtualenv \
-		python-dev \
+		python3.5-dev \
 		ca-certificates \
 		python-pip \
 	&& \
@@ -17,7 +17,7 @@ RUN groupadd user && \
 
 WORKDIR /home/user
 
-RUN su user -c "virtualenv ./bandersnatch-env  && \
+RUN su user -c "virtualenv --python=python3.5 ./bandersnatch-env  && \
 		. ./bandersnatch-env/bin/activate && \
 		pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt"
 
